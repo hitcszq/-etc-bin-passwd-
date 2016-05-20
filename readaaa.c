@@ -6,7 +6,7 @@
 #define USR 4
 int main(int argc,char** argv)
 {
-	int ruid = 1001;
+	int ruid = getuid();
 	char* ms[MAX_USER]={0};
 	int uid[MAX_USER]={-1};	
 	FILE* fp=fopen("aaa","r+b");
@@ -22,16 +22,12 @@ int main(int argc,char** argv)
 		i++;
 	}
 	fclose(fp);
-	for(j=0;j<USR;j++)
-	{
-		printf("%d:%s\n",uid[j],ms[j]);
-	}
 	if (strcmp(argv[1], "-read") == 0)
 	{
 		for (j = 0; j<USR; j++)
 		{
 			if (ruid == uid[j])
-				printf("your ms:%s", ms[j]);
+				printf("your ms:%s\n", ms[j]);
 		}
 	}
 	if (strcmp(argv[1], "-write") == 0)
@@ -47,7 +43,7 @@ int main(int argc,char** argv)
 		FILE *fp = fopen("aaa", "w");
 		for (j = 0; j<USR; j++)
 		{
-			fprintf(fp, "%d:%s\n", uid[j], ms[j]);
+			fprintf(fp, "%d %s\n", uid[j], ms[j]);
 		}
 	}
 	return 0;
